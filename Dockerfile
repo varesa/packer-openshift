@@ -1,6 +1,6 @@
 FROM hashicorp/packer:1.3.2
 
-COPY ca.crt /usr/local/share/openshift.crt
+COPY ca.crt /usr/local/share/ca-certificates/openshift.crt
 RUN update-ca-certificates
 
 WORKDIR /bin
