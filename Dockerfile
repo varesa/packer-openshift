@@ -1,5 +1,8 @@
 FROM hashicorp/packer:1.3.2
 
+COPY ca.crt /usr/local/share/openshift.crt
+RUN update-ca-certificates
+
 WORKDIR /bin
 
 RUN wget https://github.com/jetbrains-infra/packer-builder-vsphere/releases/download/v2.0.1/packer-builder-vsphere-clone.linux -O packer-builder-vsphere-clone &&\
