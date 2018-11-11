@@ -8,10 +8,6 @@ cdrom
 # Use graphical install
 text
 
-# Run the Setup Agent on first boot
-firstboot --enable
-ignoredisk --only-use=sda
-
 # Keyboard layouts
 keyboard --vckeymap=us --xlayouts='us'
 
@@ -25,40 +21,47 @@ network  --hostname=localhost.localdomain
 # Root password
 rootpw password
 
-# System services
-services --disabled="chronyd"
-
 # System timezone
-timezone Europe/Helsinki --isUtc --nontp
+timezone Europe/Helsinki --isUtc
+
+# Partitioning
+ignoredisk --only-use=sda
+clearpart --none --initlabel
+autopart --type=lvm
 
 # System bootloader configuration
 bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
-autopart --type=lvm
 
-# Partition clearing information
-clearpart --none --initlabel
-
+# Repos for the duration of the install
 repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/7/x86_64/
 repo --name="Base" --baseurl=http://mirror.centos.org/centos/7/os/x86_64/
 repo --name="Updates" --baseurl=http://mirror.centos.org/centos/7/updates/x86_64/
+repo --name="puppet5" --baseurl=http://yum.puppetlabs.com/puppet5/el/7/x86_64/
 
+# Packages to install
 %packages
+
 @^minimal
 @core
-kexec-tools
+
 epel-release
+puppet5-release
+
+firewalld 
+ipa-client 
+puppet-agent 
 open-vm-tools
 
+git 
+htop 
+tcpdump 
+tmux 
+vim-enhanced 
+wget 
+zsh
+
 %end
 
-#%addon com_redhat_kdump --enable --reserve-mb='auto'
-#%end
-
-%anaconda
-pwpolicy root --minlen=6 --minquality=1 --notstrict --nochanges --notempty
-pwpolicy user --minlen=6 --minquality=1 --notstrict --nochanges --emptyok
-pwpolicy luks --minlen=6 --minquality=1 --notstrict --nochanges --notempty
-%end
-
+# Done
 reboot --eject
 
