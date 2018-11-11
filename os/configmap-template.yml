@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: templates
+data:
+  centos7-iso.json: |-
+    {
+      "variables": {
+        "vsphere_address": "vsphere address",
+        "vsphere_username": "vsphere username",
+        "vsphere_password": "vsphere password",
+        "guest_password": "guest-password"
+      },
+
+      "builders": [
+        {
+          "type": "vsphere-iso",
+
+          "vcenter_server": "{{user `vsphere_address`}}",
+          "username": "{{user `vsphere_username`}}",
+          "password": "{{user `vsphere_password`}}",
+          "insecure_connection": true,
+          
+          "datacenter": "Tampere",
+          "cluster": "vsan",
+          "datastore": "vsanDatastore",
+
+          "CPUs": 2,
+          "CPU_reservation": 0,
+          "CPU_limit": -1,
+          "RAM": 2048,
+          "RAM_reservation": 0,
+          "RAM_hot_plug": true,
+          "disk_thin_provisioned": true,
+          "disk_size": 25000,
+
+          "network": "vm-16-guest",
+          "network_card": "vmxnet3",
+
+          "vm_name": "centos7packed",
+          "folder": "Z_Templates",
+          "guest_os_type": "centos7_64Guest",
+
+          "iso_paths": [ "[tmpnfs] centos7-latest.iso"],
+          "boot_wait": "10s",
+          "boot_command": [ "<esc> linux inst.text  inst.ks=https://raw.githubusercontent.com/varesa/packer-openshift/master/kickstarts/centos7.ks<enter><wait>" ],
+
+          "ssh_username": "root",
+          "ssh_password": "{{user `guest_password`}}",
+
+          "shutdown_command": "shutdown -P now",
+          "shutdown_timeout": "5m",
+          "create_snapshot": true,
+          "convert_to_template": false
+        }
+      ],
+
+      "provisioners": [
+        {
+          "type": "shell",
+          "environment_vars": [],
+          "inline": [
+            "yum update -y",
+            "yum install -y https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm",
+            "yum install -y https://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-1.el7.centos.noarch.rpm",
+            "yum install -y epel-release firewalld git htop ipa-client puppet-agent tcpdump tmux vim-enhanced wget zabbix-agent zsh",
+            "echo built `date` >> /root/built"
+          ]
+        }
+      ]
+    }
+  clone.json: |-
+    {
+      "variables": {
+        "vsphere_password": "vsphere-password",
+        "guest_password": "guest-password"
+      },
+
+      "builders": [
+        {
+          "type": "vsphere-clone",
+
+          "vcenter_server": "vcenter.tre.esav.fi",
+          "username": "vsphere_packer",
+          "password": "{{user `vsphere_password`}}",
+          "insecure_connection": true,
+          "datacenter": "Tampere",
+
+          "template": "Z_Templates/centos7clean",
+          "vm_name": "centos7packed",
+          "folder": "Z_Templates",
+          "host": "vsan",
+          "datastore": "vsanDatastore",
+          "linked_clone": false,
+
+          "CPUs": 2,
+          "CPU_reservation": 1000,
+          "CPU_limit": 2000,
+          "RAM": 2048,
+          "RAM_reservation": 2048,
+
+          "ssh_username": "root",
+          "ssh_password": "{{user `guest_password`}}",
+
+          "shutdown_command": "shutdown -P now",
+          "shutdown_timeout": "5m",
+          "create_snapshot": true,
+          "convert_to_template": false
+        }
+      ],
+
+      "provisioners": [
+        {
+          "type": "shell",
+          "environment_vars": [],
+          "inline": [
+            "yum update -y",
+            "yum install -y https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm",
+            "yum install -y https://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-1.el7.centos.noarch.rpm",
+            "yum install -y epel-release firewalld git htop ipa-client puppet-agent tcpdump tmux vim-enhanced wget zabbix-agent zsh",
+            "echo built `date` >> /root/built"
+          ]
+        }
+      ]
+    }
+

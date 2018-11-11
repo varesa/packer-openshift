@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: List
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: packer
+    name: packer
+  spec:
+    lookupPolicy:
+      local: false
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: packer-custom
+    name: packer-custom
+  spec:
+    lookupPolicy:
+      local: false

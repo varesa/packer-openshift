@@ -1,0 +1,34 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+    name: packer
+spec:
+    parallelism: 1
+    completions: 1
+    template:
+        metadata:
+            name: packer
+        spec:
+            volumes:
+            - name: templates
+              configMap:
+                  name: templates
+            containers:
+            - name: packer
+              image: docker-registry.default.svc:5000/packer/packer-custom:latest
+              command: ["/build.sh", "/templates/centos7-iso.json"]
+              volumeMounts:
+              - name: templates
+                mountPath: /templates
+              env:
+              - name: VAULT_TOKEN
+                valueFrom:
+                    secretKeyRef:
+                        name: vault
+                        key: token
+              - name: VAULT_ADDR
+                valueFrom:
+                    secretKeyRef:
+                        name: vault
+                        key: address
+            restartPolicy: OnFailure
