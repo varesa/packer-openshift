@@ -3,7 +3,6 @@
     "vsphere_address": "vsphere address",
     "vsphere_username": "vsphere username",
     "vsphere_password": "vsphere password",
-    "guest_password": "guest-password"
   },
 
   "builders": [
@@ -39,13 +38,8 @@
       "boot_wait": "10s",
       "boot_command": [ "<esc> linux inst.text  inst.ks=https://raw.githubusercontent.com/varesa/packer-openshift/master/kickstarts/centos7.ks<enter><wait>" ],
 
-      "ssh_username": "root",
-      "ssh_password": "{{user `guest_password`}}",
-
-      "shutdown_command": "shutdown -P now",
-      "shutdown_timeout": "5m",
-      "create_snapshot": true,
-      "convert_to_template": false
+      "communicator": "none",
+      "convert_to_template": true,
     }
   ]
 }
