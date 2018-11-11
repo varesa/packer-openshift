@@ -47,17 +47,5 @@
       "create_snapshot": true,
       "convert_to_template": false
     }
-  ],
-
-  "provisioners": [
-    {
-      "type": "shell",
-      "environment_vars": [],
-      "inline": [
-        "yum update -y",
-        "yum install -y epel-release firewalld git htop ipa-client puppet-agent tcpdump tmux vim-enhanced wget zabbix-agent zsh",
-        "echo built `date` >> /root/built"
-      ]
-    }
   ]
 }
