@@ -55,6 +55,7 @@
        "inline": [
          "yum update -y",
          "yum clean all",
+         "rm /etc/ssh/ssh_host*",
          "echo built `date` >> /root/built"
        ]
      }
