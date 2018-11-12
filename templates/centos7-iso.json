@@ -2,7 +2,7 @@
   "variables": {
     "vsphere_address": "vsphere address",
     "vsphere_username": "vsphere username",
-    "vsphere_password": "vsphere password",
+    "vsphere_password": "vsphere password"
   },
 
   "builders": [
@@ -39,7 +39,7 @@
       "boot_command": [ "<esc> linux inst.text  inst.ks=https://raw.githubusercontent.com/varesa/packer-openshift/master/kickstarts/centos7.ks<enter><wait>" ],
 
       "communicator": "none",
-      "convert_to_template": true,
+      "convert_to_template": true
     }
   ]
 }
