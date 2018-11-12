@@ -90,12 +90,5 @@ zsh
 
 %end
 
-%post
-
-yum update -y && yum clean all
-echo built `date` >> /root/built
-
-%end
-
 # Done
-poweroff
+reboot --eject

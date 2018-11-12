@@ -13,7 +13,7 @@
       "username": "{{user `vsphere_username`}}",
       "password": "{{user `vsphere_password`}}",
       "insecure_connection": true,
-      
+
       "datacenter": "Tampere",
       "cluster": "vsan",
       "datastore": "vsanDatastore",
@@ -38,8 +38,25 @@
       "boot_wait": "10s",
       "boot_command": [ "<esc> linux inst.text  inst.ks=https://raw.githubusercontent.com/varesa/packer-openshift/master/kickstarts/centos7.ks<enter><wait>" ],
 
-      "communicator": "none",
+      "ssh_username": "root",
+      "ssh_password": "password",
+
+      "shutdown_command": "shutdown -P now",
+      "shutdown_timeout": "5m",
+
       "convert_to_template": true
-    }
-  ]
+     }
+   ],
+
+   "provisioners": [
+     {
+       "type": "shell",
+       "environment_vars": [],
+       "inline": [
+         "yum update -y",
+         "yum clean all",
+         "echo built `date` >> /root/built"
+       ]
+     }
+   ]
 }
