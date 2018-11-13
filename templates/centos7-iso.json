@@ -24,6 +24,8 @@
       "RAM": 2048,
       "RAM_reservation": 0,
       "RAM_hot_plug": true,
+
+      "disk_controller_type": "pvscsi",
       "disk_thin_provisioned": true,
       "disk_size": 25000,
 
