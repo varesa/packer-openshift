@@ -1,13 +1,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-    name: packer
+    name: packer-DATE
 spec:
     parallelism: 1
     completions: 1
     template:
         metadata:
-            name: packer
+            name: packer-DATE
         spec:
             volumes:
             - name: templates
