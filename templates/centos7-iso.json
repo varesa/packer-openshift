@@ -27,7 +27,7 @@
 
       "disk_controller_type": "pvscsi",
       "disk_thin_provisioned": true,
-      "disk_size": 25000,
+      "disk_size": 25600,
 
       "network": "vm-16-guest",
       "network_card": "vmxnet3",
