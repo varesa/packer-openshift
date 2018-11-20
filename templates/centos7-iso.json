@@ -56,7 +56,10 @@
        "environment_vars": [],
        "inline": [
          "yum update -y",
+         "yum install -y cloud-init",
+         "yum install -y https://github.com/akutz/cloud-init-vmware-guestinfo/releases/download/v1.1.0/cloud-init-vmware-guestinfo-1.1.0-1.el7.noarch.rpm",
          "yum clean all",
+         "systemctl enable cloud-init",
          "rm /etc/ssh/ssh_host*",
          "echo built `date` >> /root/built"
        ]
