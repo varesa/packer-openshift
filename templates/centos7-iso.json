@@ -32,7 +32,7 @@
       "network": "vm-16-guest",
       "network_card": "vmxnet3",
 
-      "vm_name": "centos7packed",
+      "vm_name": "centos7-base",
       "folder": "Z_Templates",
       "guest_os_type": "centos7_64Guest",
 
@@ -43,7 +43,7 @@
       "ssh_username": "root",
       "ssh_password": "password",
 
-      "shutdown_command": "shutdown -P now",
+      "shutdown_command": "cloud-init clean --reboot",
       "shutdown_timeout": "5m",
 
       "convert_to_template": true
@@ -51,6 +51,11 @@
    ],
 
    "provisioners": [
+     {
+        "type": "file",
+        "source": "provision/cloud.cfg",
+        "destination": "/etc/cloud/cloud.cfg"
+     },
      {
        "type": "shell",
        "environment_vars": [],
@@ -61,7 +66,6 @@
          "yum clean all",
          "systemctl enable cloud-init",
          "rm /etc/ssh/ssh_host*",
-         "echo built `date` >> /root/built"
        ]
      }
    ]
