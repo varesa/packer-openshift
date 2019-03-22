@@ -7,7 +7,7 @@
 
   "builders": [
     {
-      "type": "vsphere-iso",
+      "type": "vsphere-clone",
 
       "vcenter_server": "{{user `vsphere_address`}}",
       "username": "{{user `vsphere_username`}}",
@@ -18,27 +18,10 @@
       "cluster": "vsan",
       "datastore": "vsanDatastore",
 
-      "CPUs": 2,
-      "CPU_reservation": 0,
-      "CPU_limit": -1,
-      "RAM": 2048,
-      "RAM_reservation": 0,
-      "RAM_hot_plug": true,
+      "template": "centos7-base",
 
-      "disk_controller_type": "pvscsi",
-      "disk_thin_provisioned": true,
-      "disk_size": 25600,
-
-      "network": "vm-16-guest",
-      "network_card": "vmxnet3",
-
-      "vm_name": "centos7-base",
+      "vm_name": "centos7-puppet",
       "folder": "Z_Templates",
-      "guest_os_type": "centos7_64Guest",
-
-      "iso_paths": [ "[tmpnfs] centos7-latest.iso"],
-      "boot_wait": "10s",
-      "boot_command": [ "<esc> linux inst.text  inst.ks=https://raw.githubusercontent.com/varesa/packer-openshift/master/kickstarts/centos7.ks<enter><wait>" ],
 
       "ssh_username": "root",
       "ssh_password": "password",
@@ -65,7 +48,7 @@
          "yum install -y https://github.com/akutz/cloud-init-vmware-guestinfo/releases/download/v1.1.0/cloud-init-vmware-guestinfo-1.1.0-1.el7.noarch.rpm",
          "yum clean all",
          "systemctl enable cloud-init",
-         "rm /etc/ssh/ssh_host*"
+         "rm /etc/ssh/ssh_host*",
        ]
      }
    ]
