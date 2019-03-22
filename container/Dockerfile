@@ -14,7 +14,7 @@ RUN chmod +x /bin/packer-builder-vsphere-clone /bin/packer-builder-vsphere-iso
 RUN wget https://releases.hashicorp.com/vault/0.11.4/vault_0.11.4_linux_amd64.zip -O /tmp/vault.zip && unzip /tmp/vault.zip && rm /tmp/vault.zip
 ENV VAULT_FORMAT=json
 
-COPY build.sh /
+COPY ../build.sh /
 
 ENTRYPOINT []
 CMD /bin/bash
