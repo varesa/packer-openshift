@@ -1,4 +1,4 @@
-FROM hashicorp/packer:1.3.2
+FROM hashicorp/packer:1.3.5
 
 RUN apk update && apk add jq && rm -rf /var/cache/apk/*
 

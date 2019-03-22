@@ -8,7 +8,7 @@ resources:
     - name: container-image
       type: docker-image
       source:
-          repository: registry.esav.fi/misc/packer
+          repository: registry.esav.fi/tools/packer
           username: ((autom_username))
           password: ((autom_password))
 
