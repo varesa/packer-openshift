@@ -52,6 +52,10 @@
 
    "provisioners": [
      {
+        "type": "shell",
+        "inline": [ "mkdir /etc/cloud" ]
+     },
+     {
         "type": "file",
         "source": "provision/cloud.cfg",
         "destination": "/etc/cloud/cloud.cfg"
@@ -61,8 +65,6 @@
        "environment_vars": [],
        "inline": [
          "set -exuo pipefail",
-         "sleep 6000",
-         "yum clean all",
          "yum update -y",
          "yum install -y cloud-init",
          "yum install -y https://github.com/akutz/cloud-init-vmware-guestinfo/releases/download/v1.1.0/cloud-init-vmware-guestinfo-1.1.0-1.el7.noarch.rpm",
