@@ -61,6 +61,7 @@
        "environment_vars": [],
        "inline": [
          "set -exuo pipefail",
+         "sleep 6000",
          "yum clean all",
          "yum update -y",
          "yum clean all",
