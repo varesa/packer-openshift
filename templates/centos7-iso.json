@@ -60,7 +60,7 @@
        "type": "shell",
        "environment_vars": [],
        "inline": [
-         "set -exuo pipeail",
+         "set -exuo pipefail",
          "yum clean all",
          "yum update -y",
          "yum clean all",
