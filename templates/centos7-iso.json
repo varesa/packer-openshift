@@ -60,6 +60,8 @@
        "type": "shell",
        "environment_vars": [],
        "inline": [
+         "set -exuo pipeail",
+         "yum clean all",
          "yum update -y",
          "yum clean all",
          "systemctl enable cloud-init",
