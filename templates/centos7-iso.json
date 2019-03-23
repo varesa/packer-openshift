@@ -43,7 +43,7 @@
       "ssh_username": "root",
       "ssh_password": "password",
 
-      "shutdown_command": "cloud-init clean --reboot",
+      "shutdown_command": "shutdown -P now",
       "shutdown_timeout": "5m",
 
       "convert_to_template": true
@@ -70,7 +70,8 @@
          "yum install -y https://github.com/akutz/cloud-init-vmware-guestinfo/releases/download/v1.1.0/cloud-init-vmware-guestinfo-1.1.0-1.el7.noarch.rpm",
          "yum clean all",
          "systemctl enable cloud-init",
-         "rm /etc/ssh/ssh_host*"
+         "rm /etc/ssh/ssh_host*",
+         "cloud-init clean"
        ]
      }
    ]
