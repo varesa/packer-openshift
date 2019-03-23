@@ -1,0 +1,87 @@
+resources:
+    - name: git-repo
+      type: git
+      source:
+          uri: https://github.com/varesa/packer-vsphere
+          branch: master
+
+jobs:
+    - name: Build base image
+      public: true
+      serial: true
+      plan:
+          - get: git-repo
+          - task: "Build base image"
+            config:
+                inputs:
+                    - name: git-repo
+
+                platform: linux
+                
+                image_resource:
+                    type: docker-image
+                    source:
+                        repository: registry.esav.fi/tools/packer
+                        username: ((autom_username))
+                        password: ((autom_password))
+
+                run:
+                    path: bash
+                    args:
+                        - -exuc
+                        - |
+                            cd git-repo
+                            packer build \
+                                -force \
+                                -var "vsphere_address=$VSPHERE_ADDRESS" \
+                                -var "vsphere_username=$VSPHERE_USERNAME" \
+                                -var "vsphere_password=$VSPHERE_PASSWORD" \
+                                -var "guest_password=$ROOT_PASSWORD" \
+                                templates/centos7-iso.json 
+                            
+                params:
+                    VSPHERE_ADDRESS: vcenter.tre.esav.fi
+                    VSPHERE_USERNAME: ((vsphere-user))
+                    VSPHERE_PASSWORD: ((vsphere-password))
+                    ROOT_PASSWORD: password
+    - name: Build puppet image
+      public: true
+      serial: true
+      plan:
+          - get: git-repo
+            trigger: true
+            passed:
+                - Build base image
+          - task: "Build puppet image"
+            config:
+                inputs:
+                    - name: git-repo
+
+                platform: linux
+                
+                image_resource:
+                    type: docker-image
+                    source:
+                        repository: registry.esav.fi/tools/packer
+                        username: ((autom_username))
+                        password: ((autom_password))
+
+                run:
+                    path: bash
+                    args:
+                        - -exuc
+                        - |
+                            cd git-repo
+                            packer build \
+                                -force \
+                                -var "vsphere_address=$VSPHERE_ADDRESS" \
+                                -var "vsphere_username=$VSPHERE_USERNAME" \
+                                -var "vsphere_password=$VSPHERE_PASSWORD" \
+                                -var "guest_password=$ROOT_PASSWORD" \
+                                templates/centos7-puppet.json 
+                            
+                params:
+                    VSPHERE_ADDRESS: vcenter.tre.esav.fi
+                    VSPHERE_USERNAME: ((vsphere-user))
+                    VSPHERE_PASSWORD: ((vsphere-password))
+                    ROOT_PASSWORD: password
