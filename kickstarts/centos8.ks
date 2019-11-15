@@ -40,7 +40,7 @@ repo --name="puppet5" --baseurl=http://yum.puppetlabs.com/puppet5/el/8/x86_64/
 # Packages to install
 %packages
 
-@^minimal
+@^minimal-environment
 @core
 
 epel-release
