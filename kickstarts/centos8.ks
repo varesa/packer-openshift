@@ -33,9 +33,8 @@ autopart --type=lvm
 bootloader --append=" crashkernel=auto" --location=mbr --boot-drive=sda
 
 # Repos for the duration of the install
-repo --name="EPEL" --baseurl=http://dl.fedoraproject.org/pub/epel/8/x86_64/
-repo --name="Base" --baseurl=http://mirror.centos.org/centos/8/os/x86_64/
-repo --name="Updates" --baseurl=http://mirror.centos.org/centos/8/updates/x86_64/
+repo --name="EPEL" --baseurl=https://download.fedoraproject.org/pub/epel/8/Everything/x86_64
+repo --name="Base" --baseurl=http://mirror.centos.org/centos/8/BaseOS/x86_64/os/
 repo --name="puppet5" --baseurl=http://yum.puppetlabs.com/puppet5/el/8/x86_64/
 
 # Packages to install
