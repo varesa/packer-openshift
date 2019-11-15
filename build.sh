@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export VAULT_FORMAT=json
 export VSPHERE_ADDRESS=$(vault kv get /kv/packer/vsphere | jq -r '.data.address')
 export VSPHERE_USERNAME=$(vault kv get /kv/packer/vsphere | jq -r '.data.username')
 export VSPHERE_PASSWORD=$(vault kv get /kv/packer/vsphere | jq -r '.data.password')
