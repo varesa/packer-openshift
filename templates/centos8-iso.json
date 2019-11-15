@@ -38,7 +38,7 @@
 
       "iso_paths": [ "[tmpnfs] centos8-latest.iso"],
       "boot_wait": "10s",
-      "boot_command": [ "<esc>linux inst.text inst.ks=https://raw.githubusercontent.com/varesa/packer-openshift/master/kickstarts/centos7.ks<enter><wait>" ],
+      "boot_command": [ "<esc>linux inst.text inst.ks=https://raw.githubusercontent.com/varesa/packer-openshift/master/kickstarts/centos8.ks<enter><wait>" ],
 
       "ssh_username": "root",
       "ssh_password": "password",
