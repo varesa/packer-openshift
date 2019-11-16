@@ -16,4 +16,4 @@ fi
 packer build \
     -var "vsphere_address=$VSPHERE_ADDRESS" -var "vsphere_username=$VSPHERE_USERNAME" -var "vsphere_password=$VSPHERE_PASSWORD" \
     -var "guest_password=$ROOT_PASSWORD" \
-    $1
+    "$@"
