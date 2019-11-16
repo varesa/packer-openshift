@@ -32,7 +32,7 @@
       "network": "vm-16-guest",
       "network_card": "vmxnet3",
 
-      "vm_name": "centos7-base",
+      "vm_name": "centos7-base-{{isotime \"060102-150405\"}}",
       "folder": "Z_Templates",
       "guest_os_type": "centos7_64Guest",
 
